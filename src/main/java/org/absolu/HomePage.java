@@ -24,6 +24,11 @@ public class HomePage extends WebPage {
 		add(new Label("nbMembres", g != null ? g.getMembers().size() : 0));
 
 		ListView<Membre> members = new ListView<Membre>("listeMembres", g.getMembers()) {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = 4152985529724487708L;
+
 			@Override
 			protected void populateItem(ListItem<Membre> item) {
 				item.add(new AlternateRowCssClassAttributeAppender(item.getIndex(), "evenRow", "oddRow"));
@@ -31,6 +36,11 @@ public class HomePage extends WebPage {
 				final Membre membre = item.getModelObject();
 
 				Label lNom = new Label("nomMembre", new AbstractReadOnlyModel<String>() {
+					/**
+					 *
+					 */
+					private static final long serialVersionUID = -5315385723861780092L;
+
 					@Override
 					public String getObject() {
 						return membre.getCharacter().getName();
@@ -40,6 +50,11 @@ public class HomePage extends WebPage {
 				item.add(lNom);
 
 				item.add(new Label("classeMembre", new AbstractReadOnlyModel<String>() {
+					/**
+					 *
+					 */
+					private static final long serialVersionUID = -4445801448919143673L;
+
 					@Override
 					public String getObject() {
 						return ((WicketApplication) getApplication()).getBattleApiUtils()
@@ -48,6 +63,11 @@ public class HomePage extends WebPage {
 				}));
 
 				item.add(new Label("rangMembre", new AbstractReadOnlyModel<Integer>() {
+					/**
+					 *
+					 */
+					private static final long serialVersionUID = -1600772145055858201L;
+
 					@Override
 					public Integer getObject() {
 						return membre.getRank();
