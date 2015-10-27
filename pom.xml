@@ -3,13 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.absolu</groupId>
 	<artifactId>Absolu</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
 	<!-- TODO project name -->
 	<name>Absolu</name>
 	<description></description>
+	<parent>
+		<groupId>org.absolu</groupId>
+		<artifactId>Absolu-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -18,6 +21,7 @@
 		</license>
 	</licenses>
 	<properties>
+		<tomcat.webapps.dir>E:\workspace\tomcat-genki\diy\tomcat\webapps</tomcat.webapps.dir>
 		<httpcomponents.version>4.5.1</httpcomponents.version>
 		<commons.httpclient.version>3.1</commons.httpclient.version>
 		<jackson.version>2.6.3</jackson.version>
@@ -208,6 +212,30 @@
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
 					<webXml>src/main/webapp/WEB-INF/${web.xml}</webXml>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>id.package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Copie de
+    ${project.build.directory}/${project.build.finalName}.war vers
+    ${tomcat.webapps.dir}/${project.build.finalName}.war</echo>
+								<copy
+									file="${project.build.directory}/${project.build.finalName}.war"
+									toFile="${tomcat.webapps.dir}/${project.build.finalName}.war" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
