@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="utf-8" />
+<title>Absolu</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="style.css" type="text/css" media="screen"
+	title="Stylesheet" />
+</head>
+<body>
+	<div id="hd">
+		<div id="logo">
+			<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
+			<h1>Absolu</h1>
+		</div>
+	</div>
+	<div id="bd">
+		<h2>Congratulations!</h2>
+		<wicket:container wicket:id="nbMembres"/> membres dans la guilde.
+		<div>
+		<table>
+			<tr>
+				<th>Nom</th>
+				<th>Rang</th>
+				<th>Classe</th>
+			</tr>
+			<tr wicket:id="listeMembres">
+				<td wicket:id="nomMembre"/>
+				<td wicket:id="rangMembre"/>
+				<td wicket:id="classeMembre"/>
+			</tr>
+		</table>
+		</div>
+	</div>
+	<div id="ft"></div>
+</body>
+</html>
