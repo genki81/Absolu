@@ -17,11 +17,11 @@
 		"deployment". If no configuration is found, "development" is the default. -->
 	<context-param>
 		<param-name>configuration</param-name>
-		<param-value>development</param-value>
+		<param-value>deployment</param-value>
 	</context-param>
 	<context-param>
 		<param-name>log4jConfiguration</param-name>
-		<param-value>log4j2_dev.xml</param-value>
+		<param-value>log4j2_prod.xml</param-value>
 	</context-param>
 	<filter>
 		<filter-name>wicket.Absolu</filter-name>

@@ -30,22 +30,19 @@
 		<wtp.version>none</wtp.version>
 
 		<!-- Profile-dependant properties -->
-		<enable.wicket.deployment.begin></enable.wicket.deployment.begin>
-		<enable.wicket.deployment.end></enable.wicket.deployment.end>
+		<web.xml>web.xml</web.xml>
 	</properties>
 	<profiles>
 		<profile>
 			<id>dev</id>
 			<properties>
-				<enable.wicket.deployment.begin></enable.wicket.deployment.begin>
-				<enable.wicket.deployment.end></enable.wicket.deployment.end>
+				<web.xml>web_dev.xml</web.xml>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
-				<enable.wicket.deployment.begin>--&gt;</enable.wicket.deployment.begin>
-				<enable.wicket.deployment.end>&lt;!--</enable.wicket.deployment.end>
+				<web.xml>web_prod.xml</web.xml>
 			</properties>
 		</profile>
 	</profiles>
@@ -132,6 +129,8 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>${project.artifactId}</finalName>
+
 		<resources>
 			<resource>
 				<filtering>false</filtering>
@@ -204,18 +203,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
-					<webResources>
-						<resource>
-							<filtering>true</filtering>
-							<directory>src/main/webapp</directory>
-							<includes>
-								<include>**/web.xml</include>
-							</includes>
-						</resource>
-					</webResources>
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+					<webXml>src/main/webapp/WEB-INF/${web.xml}</webXml>
 				</configuration>
 			</plugin>
 		</plugins>
