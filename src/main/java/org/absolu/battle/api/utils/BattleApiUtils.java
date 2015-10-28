@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.absolu.WicketApplication;
+import org.absolu.battle.api.constants.BattleApiConstants;
 import org.absolu.battle.api.pojo.Classe;
 import org.absolu.battle.api.pojo.Guilde;
+import org.absolu.battle.api.pojo.Personnage;
 import org.absolu.battle.api.pojo.Race;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -34,7 +37,7 @@ public class BattleApiUtils {
 	};
 
 	public Guilde getGuilde() {
-		String readGuildMembersCount = queryBattle("https://eu.api.battle.net/wow/guild/Confrérie%20du%20Thorium/Absolu?fields=members&locale=fr_FR&jsonp=absolu&apikey=3pz4e2c2xjn2khrk8pruxc7munv9dk5m");
+		String readGuildMembersCount = queryBattle(BattleApiConstants.getGuildeMembersQueryUrl());
 		readGuildMembersCount = readGuildMembersCount.substring(readGuildMembersCount.indexOf("(") + 1);
 		readGuildMembersCount = readGuildMembersCount.substring(0, readGuildMembersCount.length() - 2);
 		logger.debug(readGuildMembersCount);
@@ -51,8 +54,22 @@ public class BattleApiUtils {
 		return g;
 	}
 
+	public Personnage getPersonnage(final String name, final String realm) {
+		String readCharacter = queryBattle(BattleApiConstants.getCharacterQueryUrl(name, realm));
+		logger.debug(readCharacter);
+		Personnage p = new Personnage();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectReader reader = mapper.readerFor(Personnage.class);
+			p = reader.readValue(readCharacter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
+
 	public List<Race> getListRaces() {
-		String sRaces = queryBattle("https://eu.api.battle.net/wow/data/character/races?locale=fr_FR&apikey=3pz4e2c2xjn2khrk8pruxc7munv9dk5m");
+		String sRaces = queryBattle(BattleApiConstants.getRacesQueryUrl());
 		logger.debug(sRaces);
 		List<Race> races = new ArrayList<Race>();
 		try {
@@ -71,7 +88,7 @@ public class BattleApiUtils {
 	}
 
 	public List<Classe> getListClasses() {
-		String sClasses = queryBattle("https://eu.api.battle.net/wow/data/character/classes?locale=fr_FR&apikey=3pz4e2c2xjn2khrk8pruxc7munv9dk5m");
+		String sClasses = queryBattle(BattleApiConstants.getClassesQueryUrl());
 		logger.debug(sClasses);
 		List<Classe> classes = new ArrayList<Classe>();
 		try {
@@ -92,8 +109,8 @@ public class BattleApiUtils {
 	private String queryBattle(String url) {
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet httpGet = new HttpGet(url);
 		try {
+			HttpGet httpGet = new HttpGet(URIUtil.encodeQuery(url));
 			HttpResponse response = client.execute(httpGet);
 			StatusLine statusLine = response.getStatusLine();
 			int statusCode = statusLine.getStatusCode();

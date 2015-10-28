@@ -38,7 +38,6 @@ public class WicketApplication extends WebApplication {
 		battleApiUtils = new BattleApiUtils(this);
 		races = battleApiUtils.getListRaces();
 		classes = battleApiUtils.getListClasses();
-		guilde = battleApiUtils.getGuilde();
 	}
 
 	public List<Race> getRaces() {

@@ -1,6 +1,10 @@
 package org.absolu.battle.api.pojo;
 
-public class Embleme {
+import java.io.Serializable;
+
+public class Embleme implements Serializable {
+	private static final long serialVersionUID = 3396544415763624288L;
+
 	private int icon;
 	private String iconColor;
 	private int border;

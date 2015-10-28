@@ -1,6 +1,10 @@
 package org.absolu.battle.api.pojo;
 
-public class Specialisation {
+import java.io.Serializable;
+
+public class Specialisation implements Serializable {
+	private static final long serialVersionUID = -8162839512039679363L;
+
 	private String name;
 	private String role;
 	private String backgroundImage;

@@ -1,8 +1,12 @@
 package org.absolu.battle.api.pojo;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Personnage {
+public class Personnage implements Serializable {
+	private static final long serialVersionUID = 4120622827275356452L;
+
 	private String name;
 	private String realm;
 	private String battlegroup;
@@ -17,6 +21,10 @@ public class Personnage {
 	private String guild;
 	private String guildRealm;
 	private long lastModified;
+	private String calcClass;
+	private int faction;
+	private Objets items;
+	private long totalHonorableKills;
 
 	public String getName() {
 		return name;
@@ -120,5 +128,37 @@ public class Personnage {
 
 	public void setLastModified(long lastModified) {
 		this.lastModified = lastModified;
+	}
+
+	public String getCalcClass() {
+		return calcClass;
+	}
+
+	public void setCalcClass(String calcClass) {
+		this.calcClass = calcClass;
+	}
+
+	public int getFaction() {
+		return faction;
+	}
+
+	public void setFaction(int faction) {
+		this.faction = faction;
+	}
+
+	public Objets getItems() {
+		return items;
+	}
+
+	public void setItems(Objets items) {
+		this.items = items;
+	}
+
+	public long getTotalHonorableKills() {
+		return totalHonorableKills;
+	}
+
+	public void setTotalHonorableKills(long totalHonorableKills) {
+		this.totalHonorableKills = totalHonorableKills;
 	}
 }

@@ -1,6 +1,10 @@
 package org.absolu.battle.api.pojo;
 
-public class Membre {
+import java.io.Serializable;
+
+public class Membre implements Serializable {
+	private static final long serialVersionUID = -8323407276154810970L;
+
 	private Personnage character;
 	private int rank;
 

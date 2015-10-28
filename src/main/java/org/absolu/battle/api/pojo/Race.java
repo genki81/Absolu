@@ -1,6 +1,10 @@
 package org.absolu.battle.api.pojo;
 
-public class Race {
+import java.io.Serializable;
+
+public class Race implements Serializable {
+	private static final long serialVersionUID = -3163312936460985018L;
+
 	private int id;
 	private int mask;
 	private String side;

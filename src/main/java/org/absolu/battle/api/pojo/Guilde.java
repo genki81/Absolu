@@ -1,8 +1,11 @@
 package org.absolu.battle.api.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Guilde {
+public class Guilde implements Serializable {
+	private static final long serialVersionUID = 7494544015115867805L;
+
 	private long lastModified;
 	private String name;
 	private String realm;

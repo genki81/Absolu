@@ -1,6 +1,10 @@
 package org.absolu.battle.api.pojo;
 
-public class Classe {
+import java.io.Serializable;
+
+public class Classe implements Serializable {
+	private static final long serialVersionUID = 6459631380263963061L;
+
 	private int id;
 	private int mask;
 	private String powerType;

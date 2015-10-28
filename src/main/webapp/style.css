@@ -141,3 +141,35 @@ h3 {
 .color-c12, .color-c12 a {
 	color: #4dd827 !important;
 } /* demon hunter */
+
+.specRole {
+	display: block;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.spec img {
+	display: block;
+	border-radius: 2px;
+	width: 26px;
+	height: 26px;
+}
+
+.icon-dps, .icon-healing, .icon-healer, .icon-tank {
+	position: relative;
+	top: -10px;
+	float: right;
+	width: 16px;
+	height: 16px;
+	background:
+		url("http://eu.battle.net/wow/static/images/icons/roles.png")
+		no-repeat;
+}
+
+.icon-dps { background-position: 0 0; }
+.icon-healer, .icon-healing { background-position: -16px 0; }
+.icon-tank   { background-position: -32px 0; }
+.role {
+	position: absolute;
+	left: 12px;
+}
