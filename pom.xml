@@ -29,6 +29,7 @@
 		<jetty9.version>9.2.11.v20150529</jetty9.version>
 		<log4j.version>2.3</log4j.version>
 		<junit.version>4.12</junit.version>
+		<mongodb.version>3.0.4</mongodb.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>none</wtp.version>
@@ -48,6 +49,38 @@
 			<properties>
 				<web.xml>web_prod.xml</web.xml>
 			</properties>
+		</profile>
+		<profile>
+			<id>tomcat</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+						<executions>
+							<execution>
+								<id>id.package</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo>Copie de
+											${project.build.directory}/${project.build.finalName}.war
+											vers
+											${tomcat.webapps.dir}/${project.build.finalName}.war</echo>
+										<copy
+											file="${project.build.directory}/${project.build.finalName}.war"
+											toFile="${tomcat.webapps.dir}/${project.build.finalName}.war" />
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 	<dependencies>
@@ -131,6 +164,11 @@
 			<version>${jetty9.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver</artifactId>
+			<version>${mongodb.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -212,30 +250,6 @@
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
 					<webXml>src/main/webapp/WEB-INF/${web.xml}</webXml>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
-				<executions>
-					<execution>
-						<id>id.package</id>
-						<phase>package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<echo>Copie de
-    ${project.build.directory}/${project.build.finalName}.war vers
-    ${tomcat.webapps.dir}/${project.build.finalName}.war</echo>
-								<copy
-									file="${project.build.directory}/${project.build.finalName}.war"
-									toFile="${tomcat.webapps.dir}/${project.build.finalName}.war" />
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
