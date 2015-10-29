@@ -3,6 +3,7 @@ package org.absolu;
 import org.absolu.battle.api.constants.BattleApiConstants;
 import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Membre;
+import org.absolu.dao.MongoDao;
 import org.absolu.decoration.AlternateRowCssClassAttributeAppender;
 import org.absolu.decoration.ClasseClassAttributeAppender;
 import org.absolu.decoration.RoleAttributeAppender;
@@ -18,14 +19,18 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
+	private static MongoDao dao;
+
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 
-		// add(new Label("version", getApplication().getFrameworkSettings()
-		// .getVersion()));
 		Guilde g = ((WicketApplication) getApplication()).getBattleApiUtils().getGuilde();
 		((WicketApplication) getApplication()).setGuilde(g);
+		dao = ((WicketApplication) getApplication()).getMongoDao();
+		add(new Label("mongo", dao.getMongoStatus()));
 		add(new Label("nbMembres", g != null ? g.getMembers().size() : 0));
+
+		dao.saveGuilde(g);
 
 		ListView<Membre> members = new ListView<Membre>("listeMembres", g.getMembers()) {
 			private static final long serialVersionUID = 4152985529724487708L;
@@ -35,11 +40,12 @@ public class HomePage extends WebPage {
 				item.add(new AlternateRowCssClassAttributeAppender(item.getIndex(), "evenRow", "oddRow"));
 
 				final Membre membre = item.getModelObject();
+				// TODO
 				/*
-				 * TODO final Personnage personnage = ((WicketApplication)
+				 * membre.setCharacter(((WicketApplication)
 				 * getApplication()).getBattleApiUtils().getPersonnage(
 				 * membre.getCharacter().getName(),
-				 * membre.getCharacter().getRealm());
+				 * membre.getCharacter().getRealm()));
 				 */
 
 				Label lNom = new Label("nomMembre", new AbstractReadOnlyModel<String>() {

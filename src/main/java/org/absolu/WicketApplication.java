@@ -2,10 +2,13 @@ package org.absolu;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.absolu.battle.api.pojo.Classe;
 import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Race;
 import org.absolu.battle.api.utils.BattleApiUtils;
+import org.absolu.dao.MongoDao;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
@@ -20,6 +23,8 @@ public class WicketApplication extends WebApplication {
 	private List<Race> races;
 	private List<Classe> classes;
 	private Guilde guilde;
+
+	private MongoDao mongoDao;
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
@@ -38,6 +43,15 @@ public class WicketApplication extends WebApplication {
 		battleApiUtils = new BattleApiUtils(this);
 		races = battleApiUtils.getListRaces();
 		classes = battleApiUtils.getListClasses();
+
+		ServletContext sc = getServletContext();
+		String mongoHost = sc.getInitParameter("mongoHost");
+		String mongoSPort = sc.getInitParameter("mongoPort");
+		String mongoUser = sc.getInitParameter("mongoUser");
+		String mongoPwd = sc.getInitParameter("mongoPwd");
+		String mongoDbName = sc.getInitParameter("mongoDb");
+
+		mongoDao = new MongoDao(mongoHost, mongoSPort, mongoUser, mongoPwd, mongoDbName);
 	}
 
 	public List<Race> getRaces() {
@@ -58,6 +72,10 @@ public class WicketApplication extends WebApplication {
 
 	public BattleApiUtils getBattleApiUtils() {
 		return battleApiUtils;
+	}
+
+	public MongoDao getMongoDao() {
+		return mongoDao;
 	}
 
 }
