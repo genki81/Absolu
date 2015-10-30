@@ -3,7 +3,7 @@ package org.absolu;
 import org.absolu.battle.api.constants.BattleApiConstants;
 import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Membre;
-import org.absolu.dao.MongoDao;
+import org.absolu.dao.GuildeDao;
 import org.absolu.decoration.AlternateRowCssClassAttributeAppender;
 import org.absolu.decoration.ClasseClassAttributeAppender;
 import org.absolu.decoration.RoleAttributeAppender;
@@ -15,22 +15,25 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
-	private static MongoDao dao;
+	private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
+
+	private GuildeDao gDao;
 
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
+		gDao = new GuildeDao();
 
 		Guilde g = ((WicketApplication) getApplication()).getBattleApiUtils().getGuilde();
 		((WicketApplication) getApplication()).setGuilde(g);
-		dao = ((WicketApplication) getApplication()).getMongoDao();
-		add(new Label("mongo", dao.getMongoStatus()));
-		add(new Label("nbMembres", g != null ? g.getMembers().size() : 0));
+		gDao.saveGuilde(g);
 
-		dao.saveGuilde(g);
+		add(new Label("nbMembres", g != null ? g.getMembers().size() : 0));
 
 		ListView<Membre> members = new ListView<Membre>("listeMembres", g.getMembers()) {
 			private static final long serialVersionUID = 4152985529724487708L;

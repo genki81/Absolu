@@ -1,16 +1,20 @@
 package org.absolu;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Timer;
 
-import javax.servlet.ServletContext;
-
+import org.absolu.batch.MembersTask;
 import org.absolu.battle.api.pojo.Classe;
 import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Race;
 import org.absolu.battle.api.utils.BattleApiUtils;
-import org.absolu.dao.MongoDao;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Application object for your web application. If you want to run this
@@ -19,12 +23,12 @@ import org.apache.wicket.protocol.http.WebApplication;
  * @see org.absolu.Start#main(String[])
  */
 public class WicketApplication extends WebApplication {
+	private final static Logger logger = LoggerFactory.getLogger(WicketApplication.class);
+
 	private BattleApiUtils battleApiUtils;
 	private List<Race> races;
 	private List<Classe> classes;
 	private Guilde guilde;
-
-	private MongoDao mongoDao;
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
@@ -40,18 +44,31 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+		logger.info("Initialisation de WicketApplication");
+		logger.info("Spring");
+		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+		logger.info("Le reste");
 		battleApiUtils = new BattleApiUtils(this);
 		races = battleApiUtils.getListRaces();
 		classes = battleApiUtils.getListClasses();
 
-		ServletContext sc = getServletContext();
-		String mongoHost = sc.getInitParameter("mongoHost");
-		String mongoSPort = sc.getInitParameter("mongoPort");
-		String mongoUser = sc.getInitParameter("mongoUser");
-		String mongoPwd = sc.getInitParameter("mongoPwd");
-		String mongoDbName = sc.getInitParameter("mongoDb");
+		initTasks();
+	}
 
-		mongoDao = new MongoDao(mongoHost, mongoSPort, mongoUser, mongoPwd, mongoDbName);
+	private void initTasks() {
+		logger.info("Initialisation des Tasks");
+		Timer time = new Timer();
+		MembersTask mt = new MembersTask(this);
+
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTimeInMillis(cal.getTimeInMillis() + 15000);
+		// cal.set(Calendar.HOUR_OF_DAY, 9);
+		// cal.set(Calendar.MINUTE, 3);
+		// cal.set(Calendar.SECOND, 0);
+		// cal.set(Calendar.MILLISECOND, 0);
+		Date next = new Date(cal.getTimeInMillis());
+		logger.debug("prochaine execution a " + next.toString());
+		time.schedule(mt, next, 1000 * 60 * 60 * 24);
 	}
 
 	public List<Race> getRaces() {
@@ -72,10 +89,6 @@ public class WicketApplication extends WebApplication {
 
 	public BattleApiUtils getBattleApiUtils() {
 		return battleApiUtils;
-	}
-
-	public MongoDao getMongoDao() {
-		return mongoDao;
 	}
 
 }
