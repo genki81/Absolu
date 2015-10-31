@@ -26,14 +26,15 @@ public class MembersTask extends TimerTask {
 	@Override
 	public void run() {
 		Date now = new Date();
-		System.out.println("Time is :" + now);
+		System.out.println("Début :" + now);
 		cDao.cleanCharacters();
 		Guilde g = battleApiUtils.getGuilde();
 		for (Membre m : g.getMembers()) {
 			logger.info("Mise à jour du personnage " + m.getCharacter().getName() + "-" + m.getCharacter().getRealm());
 			Personnage p = battleApiUtils.getPersonnage(m.getCharacter().getName(), m.getCharacter().getRealm());
 			cDao.saveCharacter(p);
-			break;
 		}
+		now = new Date();
+		System.out.println("Fin :" + now);
 	}
 }

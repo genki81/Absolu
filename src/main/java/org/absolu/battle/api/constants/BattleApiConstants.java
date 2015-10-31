@@ -1,6 +1,5 @@
 package org.absolu.battle.api.constants;
 
-
 public class BattleApiConstants {
 
 	/* API KEY + locale */
@@ -38,6 +37,6 @@ public class BattleApiConstants {
 	}
 
 	public static String getCharacterQueryUrl(final String name, final String realm) {
-		return WOW_ROOT_URL + "/character/" + realm + "/" + name + "?fields=items&apikey=" + API_KEY;
+		return WOW_ROOT_URL + "/character/" + realm + "/" + name + "?fields=items,talents&apikey=" + API_KEY;
 	}
 }

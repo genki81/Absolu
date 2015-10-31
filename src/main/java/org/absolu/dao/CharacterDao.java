@@ -32,4 +32,22 @@ public class CharacterDao extends GenericDao {
 			return false;
 		}
 	}
+
+	public Personnage findCharacter(String realm, String name) {
+		Personnage p = new Personnage();
+		try {
+			DBCollection coll = connection.getMongoDb().getCollection("personnages");
+
+			BasicDBObject dbQuery = new BasicDBObject().append("realm", realm).append("name", name);
+			DBObject obj = coll.findOne(dbQuery);
+			if (obj != null) {
+				obj.removeField("_id");
+				ObjectMapper mapper = new ObjectMapper();
+				p = mapper.convertValue(obj, Personnage.class);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
 }

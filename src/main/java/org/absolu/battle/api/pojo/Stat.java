@@ -2,6 +2,9 @@ package org.absolu.battle.api.pojo;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Stat implements Serializable {
 	private static final long serialVersionUID = -1733568836886031330L;
 	private int stat;

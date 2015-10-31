@@ -2,8 +2,12 @@ package org.absolu.battle.api.pojo;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Objets implements Serializable {
 	private static final long serialVersionUID = -8770812389514202805L;
+
 	private long averageItemLevel;
 	private long averageItemLevelEquipped;
 	private Objet head;

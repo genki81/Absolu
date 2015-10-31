@@ -2,12 +2,15 @@ package org.absolu.battle.api.pojo;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Classe implements Serializable {
 	private static final long serialVersionUID = 6459631380263963061L;
 
 	private int id;
-	private int mask;
-	private String powerType;
+	// private int mask;
+	// private String powerType;
 	private String name;
 
 	public int getId() {
@@ -16,22 +19,6 @@ public class Classe implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getMask() {
-		return mask;
-	}
-
-	public void setMask(int mask) {
-		this.mask = mask;
-	}
-
-	public String getPowerType() {
-		return powerType;
-	}
-
-	public void setPowerType(String powerType) {
-		this.powerType = powerType;
 	}
 
 	public String getName() {
@@ -44,6 +31,6 @@ public class Classe implements Serializable {
 
 	@Override
 	public String toString() {
-		return "id:" + this.id + "-mask:" + this.mask + "-powerType:" + this.powerType + "-name:" + this.name;
+		return "id:" + this.id + "-name:" + this.name;
 	}
 }

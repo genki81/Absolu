@@ -2,6 +2,9 @@ package org.absolu.battle.api.pojo;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Embleme implements Serializable {
 	private static final long serialVersionUID = 3396544415763624288L;
 

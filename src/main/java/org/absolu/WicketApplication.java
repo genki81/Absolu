@@ -1,5 +1,6 @@
 package org.absolu;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -61,13 +62,17 @@ public class WicketApplication extends WebApplication {
 		MembersTask mt = new MembersTask(this);
 
 		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTimeInMillis(cal.getTimeInMillis() + 15000);
-		// cal.set(Calendar.HOUR_OF_DAY, 9);
-		// cal.set(Calendar.MINUTE, 3);
-		// cal.set(Calendar.SECOND, 0);
-		// cal.set(Calendar.MILLISECOND, 0);
+		// cal.setTimeInMillis(cal.getTimeInMillis() + 15000);
+
+		if (cal.get(Calendar.HOUR_OF_DAY) >= 2) {
+			cal.setTimeInMillis(cal.getTimeInMillis() + 86400000);
+		}
+		cal.set(Calendar.HOUR_OF_DAY, 2);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
 		Date next = new Date(cal.getTimeInMillis());
-		logger.debug("prochaine execution a " + next.toString());
 		time.schedule(mt, next, 1000 * 60 * 60 * 24);
 	}
 

@@ -1,6 +1,7 @@
 package org.absolu.battle.api.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,6 +26,7 @@ public class Personnage implements Serializable {
 	private int faction;
 	private Objets items;
 	private long totalHonorableKills;
+	private List<Talent> talents;
 
 	public String getName() {
 		return name;
@@ -160,5 +162,13 @@ public class Personnage implements Serializable {
 
 	public void setTotalHonorableKills(long totalHonorableKills) {
 		this.totalHonorableKills = totalHonorableKills;
+	}
+
+	public List<Talent> getTalents() {
+		return talents;
+	}
+
+	public void setTalents(List<Talent> talents) {
+		this.talents = talents;
 	}
 }

@@ -3,6 +3,9 @@ package org.absolu;
 import org.absolu.battle.api.constants.BattleApiConstants;
 import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Membre;
+import org.absolu.battle.api.pojo.Objets;
+import org.absolu.battle.api.pojo.Personnage;
+import org.absolu.dao.CharacterDao;
 import org.absolu.dao.GuildeDao;
 import org.absolu.decoration.AlternateRowCssClassAttributeAppender;
 import org.absolu.decoration.ClasseClassAttributeAppender;
@@ -24,10 +27,12 @@ public class HomePage extends WebPage {
 	private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
 	private GuildeDao gDao;
+	private CharacterDao cDao;
 
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 		gDao = new GuildeDao();
+		cDao = new CharacterDao();
 
 		Guilde g = ((WicketApplication) getApplication()).getBattleApiUtils().getGuilde();
 		((WicketApplication) getApplication()).setGuilde(g);
@@ -43,13 +48,13 @@ public class HomePage extends WebPage {
 				item.add(new AlternateRowCssClassAttributeAppender(item.getIndex(), "evenRow", "oddRow"));
 
 				final Membre membre = item.getModelObject();
-				// TODO
-				/*
-				 * membre.setCharacter(((WicketApplication)
-				 * getApplication()).getBattleApiUtils().getPersonnage(
-				 * membre.getCharacter().getName(),
-				 * membre.getCharacter().getRealm()));
-				 */
+				final Personnage p;
+				if (membre != null && membre.getCharacter() != null) {
+					p = cDao.findCharacter(membre.getCharacter().getRealm(), membre.getCharacter().getName());
+				} else {
+					p = new Personnage();
+					p.setItems(new Objets());
+				}
 
 				Label lNom = new Label("nomMembre", new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = -5315385723861780092L;
@@ -105,6 +110,28 @@ public class HomePage extends WebPage {
 				Label roleMembre = new Label("roleMembre");
 				roleMembre.add(new RoleAttributeAppender(role, "icon-"));
 				item.add(roleMembre);
+
+				item.add(new Label("lvlMembre", new AbstractReadOnlyModel<Integer>() {
+					@Override
+					public Integer getObject() {
+						if (p != null && p.getItems() != null) {
+							return p.getLevel();
+						} else {
+							return new Integer(-1);
+						}
+					}
+				}));
+
+				item.add(new Label("iLvlMembre", new AbstractReadOnlyModel<Long>() {
+					@Override
+					public Long getObject() {
+						if (p != null && p.getItems() != null) {
+							return p.getItems().getAverageItemLevelEquipped();
+						} else {
+							return new Long(-1);
+						}
+					}
+				}));
 			}
 		};
 		add(members);

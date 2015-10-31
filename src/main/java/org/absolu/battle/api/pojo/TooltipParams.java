@@ -3,6 +3,9 @@ package org.absolu.battle.api.pojo;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TooltipParams implements Serializable {
 	private static final long serialVersionUID = 7155352453377042442L;
 	private int timewalkerLevel;
