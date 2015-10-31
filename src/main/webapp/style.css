@@ -12,18 +12,28 @@ body {
 	padding: 0;
 }
 
-body .evenRow {
-	background-color: #FFF;
+#membresTable {
+	color: #FFF;
+	border-collapse: collapse;
 }
 
-body .oddRow {
-	background-color: #DDF;
+#membresTable th {
+	color: #000;
+}
+
+#membresTable  .evenRow {
+	background: #2b1507;
+	border-top: 1px solid #31190a
+}
+
+#membresTable  .oddRow {
+ 	background: #231207;
+ 	border-top: 1px solid #30190b
 }
 
 #hd {
 	width: 100%;
 	height: 87px;
-	background-color: #092E67;
 	margin-top: 0;
 	padding-top: 10px;
 	border-bottom: 1px solid #888;
@@ -35,15 +45,21 @@ body .oddRow {
 	bottom: 0;
 	width: 100%;
 	height: 99px;
-	background-color: #6493D2;
 	border-top: 1px solid #888;
 	z-index: 0;
 }
 
-#logo, #bd {
-	width: 650px;
+#logo, #bd, #yt {
 	margin: 0 auto;
-	padding: 25px 50px 0 50px;
+	padding: 20px 30px 0 30px;
+}
+
+#content {
+	float:left;
+}
+
+#youtube {
+	float:right;
 }
 
 #logo h1 {
@@ -70,11 +86,28 @@ body {
 }
 
 #bd {
+	width: 600px;
 	position: absolute;
 	top: 75px;
 	bottom: 75px;
-	left: 50%;
-	margin-left: -325px;
+	left: 200px;
+	z-index: 10;
+	overflow: auto;
+	background-color: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0px 0px 10px #888;
+	-webkit-box-shadow: 0px 0px 10px #888;
+	box-shadow: 0px 0px 10px #888;
+}
+
+#yt {
+	width: 300px;
+	position: absolute;
+	top: 75px;
+	bottom: 75px;
+	right: 100px;
 	z-index: 1;
 	overflow: auto;
 	background-color: #fff;
@@ -173,3 +206,24 @@ h3 {
 	position: absolute;
 	left: 12px;
 }
+
+.nomM { width: 200px; }
+.rangM { width: 80px; text-align: center; }
+.classeM { width: 150px; }
+.niveauM { width: 60px; text-align: center; }
+.speM { width: 35px; text-align: center; }
+.ilvlM { width: 35px; text-align: center; }
+
+#ytTable {
+	color: #000;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.ytDesc { width: 150px; }
+.ytDate {
+	font-size: 10px;
+    font-style: italic;
+    color: #888;
+}
+.ytLink { width: 100px; }

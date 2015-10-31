@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+</head>
+<body>
+	<wicket:panel>
+		<div id="yt">
+			<h2>Youtube</h2>
+			<div>
+				<table>
+					<tr wicket:id="listeVideos">
+						<td>
+							<table id="ytTable">
+								<tr>
+									<td wicket:id="descVideo" class="ytDesc" />
+									<td rowspan="2"  class="ytLink">
+										<a wicket:id="linkVideo" target="_blank">
+											<img wicket:id="tbVideo"/>
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<td wicket:id="dtVideo" class="ytDate" />
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</wicket:panel>
+</body>
+</html>

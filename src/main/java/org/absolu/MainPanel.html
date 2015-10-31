@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+</head>
+<body>
+	<wicket:panel>
+	<div id="bd">
+		<h2><wicket:container wicket:id="nbMembres"/> Membres</h2>
+		<div>
+		<table id="membresTable">
+			<tr>
+				<th class="nomM">Nom</th>
+				<th class="rangM">Rang</th>
+				<th class="classeM">Classe</th>
+				<th class="niveauM">Niveau</th>
+				<th class="speM">Spe</th>
+				<th class="ilvlM">iLvl</th>
+			</tr>
+			<tr wicket:id="listeMembres">
+				<td wicket:id="nomMembre" class="nomM"/>
+				<td wicket:id="rangMembre" class="rangM"/>
+				<td wicket:id="classeMembre" class="classeM"/>
+				<td wicket:id="lvlMembre" class="niveauM"/>
+				<td class="speM">
+					<span class="specRole">
+						<span>
+							<span class="spec">
+								<img wicket:id="speMembre"/>
+							</span>
+						</span>
+						<span class="role">
+							<span wicket:id="roleMembre"/>
+						</span>
+					</span>
+				</td>
+				<td wicket:id="iLvlMembre" class="ilvlM"/>
+			</tr>
+		</table>
+		</div>
+	</div>
+	</wicket:panel>
+</body>
+</html>

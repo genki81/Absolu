@@ -1,5 +1,7 @@
 package org.absolu.battle.api.constants;
 
+import org.absolu.battle.api.pojo.Embleme;
+
 public class BattleApiConstants {
 
 	/* API KEY + locale */
@@ -10,6 +12,16 @@ public class BattleApiConstants {
 	protected static final String SPEC_ICON_BASE_EXTENSION = ".jpg";
 	protected static final String SPEC_ICON_NO_SPEC = "ability_skyreach_lens_flare";
 	protected static final String WOW_ROOT_URL = "https://eu.api.battle.net/wow";
+
+	protected static final String TABARD_ROOT_URL = "http://eu.battle.net/wow/static/images/guild/tabards/";
+	protected static final String TABARD_ICON_BASE_EXTENSION = ".png";
+	protected static final String TABARD_EMBLEM = "emblem_";
+	protected static final String TABARD_BORDER = "border_";
+	protected static final String TABARD_OVERLAY = "overlay_";
+	protected static final String TABARD_BG = "bg_";
+	protected static final String TABARD_SHADOW = "shadow_";
+	protected static final String TABARD_RING = "ring_";
+	protected static final String TABARD_HOOKS = "hooks";
 
 	/* Data */
 	protected static final String GUILD_NAME = "Absolu";
@@ -38,5 +50,9 @@ public class BattleApiConstants {
 
 	public static String getCharacterQueryUrl(final String name, final String realm) {
 		return WOW_ROOT_URL + "/character/" + realm + "/" + name + "?fields=items,talents&apikey=" + API_KEY;
+	}
+
+	public static String getEmbleme(Embleme e) {
+		return TABARD_ROOT_URL + TABARD_EMBLEM + e.getIcon() + TABARD_ICON_BASE_EXTENSION;
 	}
 }

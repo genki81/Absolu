@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org">
+<html>
 <head>
-<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 <title>Absolu</title>
 <link
 	href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold'
@@ -11,47 +11,11 @@
 	title="Stylesheet" />
 </head>
 <body>
-	<div id="hd">
-		<div id="logo">
-			<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
-			<h1>Absolu</h1>
-		</div>
-	</div>
-	<div id="bd">
-		<h2>Titre</h2>
-		<div><wicket:container wicket:id="nbMembres"/> membres dans la guilde.</div>
-		<div>
-		<table>
-			<tr>
-				<th>Nom</th>
-				<th>Rang</th>
-				<th>Classe</th>
-				<th>Niveau</th>
-				<th>Spe</th>
-				<th>iLvl</th>
-			</tr>
-			<tr wicket:id="listeMembres">
-				<td wicket:id="nomMembre"/>
-				<td wicket:id="rangMembre"/>
-				<td wicket:id="classeMembre"/>
-				<td wicket:id="lvlMembre"/>
-				<td>
-					<span class="specRole">
-						<span>
-							<span class="spec">
-								<img wicket:id="speMembre"/>
-							</span>
-						</span>
-						<span class="role">
-							<span wicket:id="roleMembre"/>
-						</span>
-					</span>
-				</td>
-				<td wicket:id="iLvlMembre"/>
-			</tr>
-		</table>
-		</div>
-	</div>
-	<div id="ft"></div>
+<div id="header" wicket:id="headerPanel">header</div>
+<div id="body">
+	<div id="content" wicket:id="mainPanel">content</div>
+	<div id="youtube" wicket:id="youtubePanel">menu</div>
+</div>
+<div id="footer" wicket:id="footerPanel">footer</div>
 </body>
 </html>
