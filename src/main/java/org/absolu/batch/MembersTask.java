@@ -9,8 +9,12 @@ import org.absolu.battle.api.pojo.Membre;
 import org.absolu.battle.api.pojo.Personnage;
 import org.absolu.battle.api.utils.BattleApiUtils;
 import org.absolu.dao.CharacterDao;
+import org.absolu.spring.SpringContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 public class MembersTask extends TimerTask {
 	private final static Logger logger = LoggerFactory.getLogger(MembersTask.class);
@@ -18,23 +22,45 @@ public class MembersTask extends TimerTask {
 
 	private final CharacterDao cDao;
 
+	private final MailSender mailSender;
+	private final SimpleMailMessage templateMessage;
+
 	public MembersTask(WicketApplication application) {
 		battleApiUtils = new BattleApiUtils(application);
 		cDao = new CharacterDao();
+		mailSender = (MailSender) SpringContext.getApplicationContext().getBean("mailSender");
+		templateMessage = (SimpleMailMessage) SpringContext.getApplicationContext().getBean("templateMessage");
+
 	}
 
 	@Override
 	public void run() {
 		Date now = new Date();
-		System.out.println("Début :" + now);
-		cDao.cleanCharacters();
-		Guilde g = battleApiUtils.getGuilde();
-		for (Membre m : g.getMembers()) {
-			logger.info("Mise à jour du personnage " + m.getCharacter().getName() + "-" + m.getCharacter().getRealm());
-			Personnage p = battleApiUtils.getPersonnage(m.getCharacter().getName(), m.getCharacter().getRealm());
-			cDao.saveCharacter(p);
+		StringBuffer sb = new StringBuffer();
+		sb.append("Début :" + now + "\n");
+		try {
+			cDao.cleanCharacters();
+			Guilde g = battleApiUtils.getGuilde();
+			for (Membre m : g.getMembers()) {
+				sb.append("Mise à jour du personnage " + m.getCharacter().getName() + "-" + m.getCharacter().getRealm()
+						+ "\n");
+				Personnage p = battleApiUtils.getPersonnage(m.getCharacter().getName(), m.getCharacter().getRealm());
+				cDao.saveCharacter(p);
+			}
+		} catch (Exception e) {
+			sb.append("Erreur : " + e.getMessage() + "\n");
 		}
 		now = new Date();
-		System.out.println("Fin :" + now);
+		sb.append("Fin :" + now + "\n");
+
+		SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
+		msg.setText(sb.toString());
+		logger.info(sb.toString());
+		try {
+			this.mailSender.send(msg);
+		} catch (MailException ex) {
+			logger.error(ex.getMessage());
+		}
 	}
+
 }

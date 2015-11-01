@@ -17,23 +17,5 @@ public class FooterPanel extends Panel {
 				+ ((WicketApplication) getApplication()).getGuilde().getEmblem().getBackgroundColor().substring(2)));
 		divtest.setOutputMarkupId(true);
 		add(divtest);
-
-		// Form<FooterPanel> form = new Form<FooterPanel>("formRefresh", new
-		// CompoundPropertyModel<FooterPanel>(this));
-		// divtest.add(form);
-		//
-		// Button button2 = new Button("buttonTask") {
-		// private static final long serialVersionUID = -2013116408854939572L;
-		//
-		// @Override
-		// public void onSubmit() {
-		// MembersTask mt = new MembersTask((WicketApplication)
-		// getApplication());
-		// mt.run();
-		// }
-		// };
-		// button2.setDefaultFormProcessing(false);
-		//
-		// form.add(button2);
 	}
 }
