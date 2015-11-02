@@ -1,6 +1,8 @@
 package org.absolu;
 
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.slf4j.Logger;
@@ -24,5 +26,33 @@ public class HeaderPanel extends Panel {
 				+ ((WicketApplication) getApplication()).getGuilde().getEmblem().getIconColor().substring(2)));
 		hdTitle.setOutputMarkupId(true);
 		hdDiv.add(hdTitle);
+
+		WebMarkupContainer container = new WebMarkupContainer("canvas");
+		container.setOutputMarkupId(true);
+		// container.add(new AttributeAppender("width", 120));
+		// container.add(new AttributeAppender("height", 120));
+		hdDiv.add(container);
 	}
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		// response.renderOnLoadJavaScript(getJavascriptCall());
+		response.render(OnDomReadyHeaderItem.forScript(getJavascriptCall()));
+
+		// include js file
+		// response.renderJavaScriptReference();
+	}
+
+	private String getJavascriptCall() {
+		// MyData data = getModel().getObject();
+		StringBuilder sb = new StringBuilder();
+		sb.append("var tabardDraw = function() { ").append("var tabard = new GuildTabard('guild-tabard', { ")
+		.append("'ring': 'alliance', ").append("'bg': [ 0, 45 ], ").append("'border': [ 0, 16 ], ")
+		.append("'emblem': [ 100, 16 ] ").append("}); }; ");
+
+		sb.append("tabardDraw();");
+
+		return sb.toString();
+	}
+
 }
