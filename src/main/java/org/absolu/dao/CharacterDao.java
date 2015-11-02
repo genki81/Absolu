@@ -44,6 +44,8 @@ public class CharacterDao extends GenericDao {
 				obj.removeField("_id");
 				ObjectMapper mapper = new ObjectMapper();
 				p = mapper.convertValue(obj, Personnage.class);
+			} else {
+				return null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

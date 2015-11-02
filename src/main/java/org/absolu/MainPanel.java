@@ -46,7 +46,19 @@ public class MainPanel extends Panel {
 				final Membre membre = item.getModelObject();
 				final Personnage p;
 				if (membre != null && membre.getCharacter() != null) {
-					p = cDao.findCharacter(membre.getCharacter().getRealm(), membre.getCharacter().getName());
+					Personnage pTmp = cDao.findCharacter(membre.getCharacter().getRealm(), membre.getCharacter()
+							.getName());
+					if (pTmp == null) {
+						pTmp = BattleApiUtils.getPersonnage(membre.getCharacter().getName(), membre.getCharacter()
+								.getRealm());
+						if (pTmp == null) {
+							pTmp = new Personnage();
+							pTmp.setName(membre.getCharacter().getName());
+							pTmp.setRealm(membre.getCharacter().getRealm());
+							cDao.saveCharacter(pTmp);
+						}
+					}
+					p = pTmp;
 				} else {
 					p = new Personnage();
 					p.setItems(new Objets());

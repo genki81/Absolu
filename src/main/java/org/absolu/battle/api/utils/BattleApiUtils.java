@@ -48,9 +48,12 @@ public class BattleApiUtils {
 
 	public static Guilde getGuilde() {
 		String readGuildMembersCount = queryBattle(BattleApiConstants.getGuildeMembersQueryUrl());
+		logger.debug(readGuildMembersCount);
+		if (readGuildMembersCount == null) {
+			return null;
+		}
 		readGuildMembersCount = readGuildMembersCount.substring(readGuildMembersCount.indexOf("(") + 1);
 		readGuildMembersCount = readGuildMembersCount.substring(0, readGuildMembersCount.length() - 2);
-		logger.debug(readGuildMembersCount);
 		Guilde g = new Guilde();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -67,6 +70,9 @@ public class BattleApiUtils {
 	public static Personnage getPersonnage(final String name, final String realm) {
 		String readCharacter = queryBattle(BattleApiConstants.getCharacterQueryUrl(name, realm));
 		logger.debug(readCharacter);
+		if (readCharacter == null) {
+			return null;
+		}
 		Personnage p = new Personnage();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -81,6 +87,9 @@ public class BattleApiUtils {
 	private static List<Race> getListRaces() {
 		String sRaces = queryBattle(BattleApiConstants.getRacesQueryUrl());
 		logger.debug(sRaces);
+		if (sRaces == null) {
+			return null;
+		}
 		List<Race> races = new ArrayList<Race>();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -100,6 +109,9 @@ public class BattleApiUtils {
 	private static List<Classe> getListClasses() {
 		String sClasses = queryBattle(BattleApiConstants.getClassesQueryUrl());
 		logger.debug(sClasses);
+		if (sClasses == null) {
+			return null;
+		}
 		List<Classe> classes = new ArrayList<Classe>();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -134,6 +146,7 @@ public class BattleApiUtils {
 				}
 			} else {
 				logger.error("Failed to download file");
+				return null;
 			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();

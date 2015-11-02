@@ -43,7 +43,9 @@ public class MembersTask extends TimerTask {
 				sb.append("Mise à jour du personnage " + m.getCharacter().getName() + "-" + m.getCharacter().getRealm()
 						+ "\n");
 				Personnage p = BattleApiUtils.getPersonnage(m.getCharacter().getName(), m.getCharacter().getRealm());
-				cDao.saveCharacter(p);
+				if (p != null) {
+					cDao.saveCharacter(p);
+				}
 			}
 		} catch (Exception e) {
 			sb.append("Erreur : " + e.getMessage() + "\n");
