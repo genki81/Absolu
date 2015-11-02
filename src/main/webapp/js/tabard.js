@@ -8,22 +8,12 @@ function GuildTabard(id, tabard) {
 		_height = canvas.height,
 		_src = [],
 		_img = [],
-		_colorMap = [],
 		_color = [],
 		_position = [];
 
 	self.initialize = function() {
 		if (canvas === null || !document.createElement('canvas').getContext || !_isInteger(tabard.bg[0]) || !_isInteger(tabard.border[0]) || !_isInteger(tabard.emblem[0]))
 			return false;
-
-		_colorMap = [
-			null,
-			null,
-			[[215,32,112],[171,0,76],[87,0,0],[225,105,26],[180,56,0],[133,11,0],[237,151,22],[205,110,0],[155,61,0],[239,207,20],[207,162,0],[158,113,0],[226,216,20],[183,177,0],[133,128,0],[206,209,24],[159,161,3],[112,115,0],[153,206,27],[108,154,3],[65,108,0],[30,210,96],[4,157,63],[0,110,11],[29,206,169],[4,152,122],[0,107,74],[33,177,214],[3,109,139],[0,81,111],[72,125,193],[38,85,145],[0,39,98],[188,75,195],[145,42,155],[108,8,128],[202,17,191],[173,0,162],[124,0,116],[219,30,160],[149,0,97],[121,0,68],[160,108,44],[108,66,15],[53,16,0],[15,26,31],[117,124,120],[136,145,139],[156,166,159],[211,211,198],[229,107,140]],
-			null,
-			[[97,42,44],[109,69,46],[119,101,36],[118,114,36],[108,118,36],[85,108,48],[76,109,48],[48,108,66],[48,105,107],[48,80,108],[55,60,100],[87,54,100],[100,55,76],[103,51,53],[153,159,149],[38,46,38],[155,94,28]],
-			[[102,0,32],[103,35,0],[103,69,0],[103,86,0],[98,102,0],[80,102,0],[54,102,0],[0,102,30],[0,102,86],[0,72,102],[9,42,94],[86,9,94],[93,10,79],[84,54,10],[177,183,176],[16,20,22],[221,163,90]]
-		];
 
 		_position = [
 			[ 0, 0, (_width*216/240), (_width*216/240) ],
@@ -35,42 +25,28 @@ function GuildTabard(id, tabard) {
 			[ (_width*18/240), (_width*27/240), (_width*179/240), (_width*32/240) ]
 		];
 
-		// If the tabard values exist
-		if (_colorMap[2][tabard.bg[1]] && _colorMap[4][tabard.border[1]] && _colorMap[5][tabard.emblem[1]]) {
-			_src = [
-				_path + 'ring-' + tabard.ring + '.png',
-				_path + 'shadow_' + Core.zeroFill(tabard.bg[0], 2) + '.png',
-				_path + 'bg_' + Core.zeroFill(tabard.bg[0], 2) + '.png',
-				_path + 'overlay_' + Core.zeroFill(tabard.bg[0], 2) + '.png',
-				_path + 'border_' + Core.zeroFill(tabard.border[0], 2) + '.png',
-				_path + 'emblem_' + Core.zeroFill(tabard.emblem[0], 2) + '.png',
-				_path + 'hooks.png'
-			];
+		_src = [
+			_path + 'ring-' + tabard.ring + '.png',
+			_path + 'shadow_' + Core.zeroFill(tabard.bg[0], 2) + '.png',
+			_path + 'bg_' + Core.zeroFill(tabard.bg[0], 2) + '.png',
+			_path + 'overlay_' + Core.zeroFill(tabard.bg[0], 2) + '.png',
+			_path + 'border_' + Core.zeroFill(tabard.border[0], 2) + '.png',
+			_path + 'emblem_' + Core.zeroFill(tabard.emblem[0], 2) + '.png',
+			_path + 'hooks.png'
+		];
 
-			_color = [
-				null,
-				null,
-				[ _colorMap[2][tabard.bg[1]][0], _colorMap[2][tabard.bg[1]][1], _colorMap[2][tabard.bg[1]][2] ],
-				null,
-				[ _colorMap[4][tabard.border[1]][0], _colorMap[4][tabard.border[1]][1], _colorMap[4][tabard.border[1]][2] ],
-				[ _colorMap[5][tabard.emblem[1]][0], _colorMap[5][tabard.emblem[1]][1], _colorMap[5][tabard.emblem[1]][2] ],
-				null
-			];
+		_color = [
+			null,
+			null,
+			tabard.bg[1],
+			null,
+			tabard.border[1],
+			tabard.emblem[1],
+			null
+		];
 
-			_img = [ new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image() ];
+		_img = [ new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image() ];
 
-		// Else fallback to default tabard
-		} else {
-			_src = [
-				_path + 'ring-' + tabard.ring + '.png',
-				_path + 'shadow_00.png',
-				_path + 'bg_00.png',
-				_path + 'overlay_00.png',
-				_path + 'hooks.png'
-			];
-
-			_img = [ new Image(), new Image(), new Image(), new Image(), new Image() ];
-		}
 
 		$(canvas).css('opacity', 0);
 		context = canvas.getContext('2d');

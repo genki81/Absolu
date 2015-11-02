@@ -1,5 +1,6 @@
 package org.absolu.battle.api.utils;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -213,5 +214,22 @@ public class BattleApiUtils {
 
 	public static List<Classe> getClasses() {
 		return classes;
+	}
+
+	private static Color getColorFromHex(final String hexColor) {
+		return new Color(Integer.valueOf(hexColor.substring(2, 4), 16), Integer.valueOf(hexColor.substring(4, 6), 16),
+				Integer.valueOf(hexColor.substring(6, 8), 16), Integer.valueOf(hexColor.substring(0, 2), 16));
+	}
+
+	public static String getColorListFromHex(final String hexColor) {
+		Color color = getColorFromHex(hexColor);
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		sb.append(color.getRed()).append(",");
+		sb.append(color.getGreen()).append(",");
+		sb.append(color.getBlue());
+		sb.append("]");
+		return sb.toString();
+
 	}
 }

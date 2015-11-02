@@ -2,6 +2,7 @@ package org.absolu;
 
 import org.absolu.battle.api.pojo.Faction;
 import org.absolu.battle.api.pojo.Guilde;
+import org.absolu.battle.api.utils.BattleApiUtils;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -33,31 +34,34 @@ public class HeaderPanel extends Panel {
 
 		WebMarkupContainer container = new WebMarkupContainer("canvas");
 		container.setOutputMarkupId(true);
-		// container.add(new AttributeAppender("width", 120));
-		// container.add(new AttributeAppender("height", 120));
+		container.add(new AttributeAppender("width", 120));
+		container.add(new AttributeAppender("height", 120));
 		hdDiv.add(container);
 	}
 
 	@Override
 	public void renderHead(IHeaderResponse response) {
-		// response.renderOnLoadJavaScript(getJavascriptCall());
 		response.render(OnDomReadyHeaderItem.forScript(getJavascriptCall()));
-
-		// include js file
-		// response.renderJavaScriptReference();
 	}
 
 	private String getJavascriptCall() {
 		Guilde g = (Guilde) getDefaultModelObject();
+
+		String emblemColor = BattleApiUtils.getColorListFromHex(g.getEmblem().getIconColor());
+		String borderColor = BattleApiUtils.getColorListFromHex(g.getEmblem().getBorderColor());
+		String bgColor = BattleApiUtils.getColorListFromHex(g.getEmblem().getBackgroundColor());
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("var tabardDraw = function() {\n");
 		sb.append("	  var tabard = new GuildTabard(\n");
 		sb.append("      'guild-tabard',\n");
 		sb.append("      {\n");
 		sb.append("        'ring': '").append(Faction.findById(g.getSide()).toLowerCase()).append("',\n");
-		sb.append("        'bg': [ 0, 45 ],\n");
-		sb.append("        'border': [ ").append(g.getEmblem().getBorder()).append(", 16 ],\n");
-		sb.append("        'emblem': [ ").append(g.getEmblem().getIcon()).append(", 16 ]\n");
+		sb.append("        'bg': [ 0, ").append(bgColor).append(" ],\n");
+		sb.append("        'border': [ ").append(g.getEmblem().getBorder()).append(", ").append(borderColor)
+				.append(" ],\n");
+		sb.append("        'emblem': [ ").append(g.getEmblem().getIcon()).append(", ").append(emblemColor)
+				.append(" ]\n");
 		sb.append("      }\n");
 		sb.append("   );\n");
 		sb.append("};\n");
