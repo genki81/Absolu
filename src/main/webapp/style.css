@@ -22,12 +22,12 @@ body {
 	color: #000;
 }
 
-#membresTable  .evenRow {
+#membresTable  .even {
 	background: #2b1507;
 	border-top: 1px solid #31190a
 }
 
-#membresTable  .oddRow {
+#membresTable  .odd {
  	background: #231207;
  	border-top: 1px solid #30190b
 }

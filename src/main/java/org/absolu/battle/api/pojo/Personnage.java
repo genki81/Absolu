@@ -3,6 +3,8 @@ package org.absolu.battle.api.pojo;
 import java.io.Serializable;
 import java.util.List;
 
+import org.absolu.battle.api.utils.BattleApiUtils;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Personnage implements Serializable {
@@ -170,5 +172,9 @@ public class Personnage implements Serializable {
 
 	public void setTalents(List<Talent> talents) {
 		this.talents = talents;
+	}
+
+	public String getDisplayClasse() {
+		return BattleApiUtils.getClasseById(classe).getName();
 	}
 }
