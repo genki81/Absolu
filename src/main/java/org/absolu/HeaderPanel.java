@@ -56,7 +56,7 @@ public class HeaderPanel extends Panel {
 		sb.append("      {\n");
 		sb.append("        'ring': '").append(Faction.findById(g.getSide()).toLowerCase()).append("',\n");
 		sb.append("        'bg': [ 0, 45 ],\n");
-		sb.append("        'border': [ 0, 16 ],\n");
+		sb.append("        'border': [ ").append(g.getEmblem().getBorder()).append(", 16 ],\n");
 		sb.append("        'emblem': [ ").append(g.getEmblem().getIcon()).append(", 16 ]\n");
 		sb.append("      }\n");
 		sb.append("   );\n");
