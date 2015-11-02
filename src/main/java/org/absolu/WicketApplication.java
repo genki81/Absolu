@@ -3,14 +3,9 @@ package org.absolu;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Timer;
 
 import org.absolu.batch.MembersTask;
-import org.absolu.battle.api.pojo.Classe;
-import org.absolu.battle.api.pojo.Guilde;
-import org.absolu.battle.api.pojo.Race;
-import org.absolu.battle.api.utils.BattleApiUtils;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -26,10 +21,6 @@ import org.slf4j.LoggerFactory;
 public class WicketApplication extends WebApplication {
 	private final static Logger logger = LoggerFactory.getLogger(WicketApplication.class);
 
-	private BattleApiUtils battleApiUtils;
-	private List<Race> races;
-	private List<Classe> classes;
-	private Guilde guilde;
 	private String realPathRoot;
 
 	/**
@@ -50,9 +41,6 @@ public class WicketApplication extends WebApplication {
 		logger.info("Spring");
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		logger.info("Le reste");
-		battleApiUtils = new BattleApiUtils(this);
-		races = battleApiUtils.getListRaces();
-		classes = battleApiUtils.getListClasses();
 		realPathRoot = getServletContext().getRealPath("/");
 		initTasks();
 	}
@@ -75,26 +63,6 @@ public class WicketApplication extends WebApplication {
 
 		Date next = new Date(cal.getTimeInMillis());
 		time.schedule(mt, next, 1000 * 60 * 60 * 24);
-	}
-
-	public List<Race> getRaces() {
-		return races;
-	}
-
-	public Guilde getGuilde() {
-		return guilde;
-	}
-
-	public void setGuilde(Guilde guilde) {
-		this.guilde = guilde;
-	}
-
-	public List<Classe> getClasses() {
-		return classes;
-	}
-
-	public BattleApiUtils getBattleApiUtils() {
-		return battleApiUtils;
 	}
 
 	public String getRealPathRoot() {

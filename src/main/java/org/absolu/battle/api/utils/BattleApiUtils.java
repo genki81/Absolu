@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.absolu.WicketApplication;
 import org.absolu.battle.api.constants.BattleApiConstants;
 import org.absolu.battle.api.pojo.Classe;
 import org.absolu.battle.api.pojo.Guilde;
@@ -35,13 +34,18 @@ import com.fasterxml.jackson.databind.ObjectReader;
 
 public class BattleApiUtils {
 	private final static Logger logger = LogManager.getLogger(BattleApiUtils.class);
-	private final WicketApplication application;
 
-	public BattleApiUtils(WicketApplication application) {
-		this.application = application;
-	};
+	private static List<Race> races;
+	private static List<Classe> classes;
+	static {
+		races = getListRaces();
+		classes = getListClasses();
+	}
 
-	public Guilde getGuilde() {
+	private BattleApiUtils() {
+	}
+
+	public static Guilde getGuilde() {
 		String readGuildMembersCount = queryBattle(BattleApiConstants.getGuildeMembersQueryUrl());
 		readGuildMembersCount = readGuildMembersCount.substring(readGuildMembersCount.indexOf("(") + 1);
 		readGuildMembersCount = readGuildMembersCount.substring(0, readGuildMembersCount.length() - 2);
@@ -59,7 +63,7 @@ public class BattleApiUtils {
 		return g;
 	}
 
-	public Personnage getPersonnage(final String name, final String realm) {
+	public static Personnage getPersonnage(final String name, final String realm) {
 		String readCharacter = queryBattle(BattleApiConstants.getCharacterQueryUrl(name, realm));
 		logger.debug(readCharacter);
 		Personnage p = new Personnage();
@@ -73,7 +77,7 @@ public class BattleApiUtils {
 		return p;
 	}
 
-	public List<Race> getListRaces() {
+	private static List<Race> getListRaces() {
 		String sRaces = queryBattle(BattleApiConstants.getRacesQueryUrl());
 		logger.debug(sRaces);
 		List<Race> races = new ArrayList<Race>();
@@ -92,7 +96,7 @@ public class BattleApiUtils {
 		return races;
 	}
 
-	public List<Classe> getListClasses() {
+	private static List<Classe> getListClasses() {
 		String sClasses = queryBattle(BattleApiConstants.getClassesQueryUrl());
 		logger.debug(sClasses);
 		List<Classe> classes = new ArrayList<Classe>();
@@ -111,7 +115,7 @@ public class BattleApiUtils {
 		return classes;
 	}
 
-	private String queryBattle(String url) {
+	private static String queryBattle(String url) {
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = HttpClientBuilder.create().build();
 		try {
@@ -138,8 +142,8 @@ public class BattleApiUtils {
 		return builder.toString();
 	}
 
-	public Classe getClasseById(int id) {
-		for (Classe classe : application.getClasses()) {
+	public static Classe getClasseById(int id) {
+		for (Classe classe : classes) {
 			if (classe.getId() == id) {
 				return classe;
 			}
@@ -193,13 +197,21 @@ public class BattleApiUtils {
 	}
 
 	public static void handleEmblem(final String root, Guilde g) {
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeIcon(g.getEmblem()));
 		saveImage(root + "/images/", BattleApiConstants.getEmblemeRing(g));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeIcon(g.getEmblem()));
 		saveImage(root + "/images/", BattleApiConstants.getEmblemeBorder(g.getEmblem()));
 		saveImage(root + "/images/", BattleApiConstants.getEmblemeBg(g.getEmblem()));
 		saveImage(root + "/images/", BattleApiConstants.getEmblemeOverlay(g.getEmblem()));
 		saveImage(root + "/images/", BattleApiConstants.getEmblemeShadow(g.getEmblem()));
 		saveImage(root + "/images/", BattleApiConstants.getEmblemeHooks());
 
+	}
+
+	public static List<Race> getRaces() {
+		return races;
+	}
+
+	public static List<Classe> getClasses() {
+		return classes;
 	}
 }

@@ -5,6 +5,7 @@ import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Membre;
 import org.absolu.battle.api.pojo.Objets;
 import org.absolu.battle.api.pojo.Personnage;
+import org.absolu.battle.api.utils.BattleApiUtils;
 import org.absolu.dao.CharacterDao;
 import org.absolu.decoration.AlternateRowCssClassAttributeAppender;
 import org.absolu.decoration.ClasseClassAttributeAppender;
@@ -16,6 +17,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +28,11 @@ public class MainPanel extends Panel {
 
 	private CharacterDao cDao;
 
-	public MainPanel(final String id) {
-		super(id);
+	public MainPanel(final String id, IModel<Guilde> model) {
+		super(id, model);
 		cDao = new CharacterDao();
 
-		Guilde g = ((WicketApplication) getApplication()).getGuilde();
+		Guilde g = (Guilde) getDefaultModelObject();
 
 		add(new Label("nbMembres", g != null ? g.getMembers().size() : 0));
 
@@ -66,8 +68,7 @@ public class MainPanel extends Panel {
 
 					@Override
 					public String getObject() {
-						return ((WicketApplication) getApplication()).getBattleApiUtils()
-								.getClasseById(membre.getCharacter().getClasse()).getName();
+						return BattleApiUtils.getClasseById(membre.getCharacter().getClasse()).getName();
 					}
 				}));
 

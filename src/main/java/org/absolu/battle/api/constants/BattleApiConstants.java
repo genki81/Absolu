@@ -70,6 +70,10 @@ public class BattleApiConstants {
 		return TABARD_RING + Faction.findById(g.getSide()).toLowerCase() + TABARD_ICON_BASE_EXTENSION;
 	}
 
+	public static String getEmblemeRing(int id) {
+		return TABARD_RING + Faction.findById(id).toLowerCase() + TABARD_ICON_BASE_EXTENSION;
+	}
+
 	public static String getEmblemeOverlay(Embleme e) {
 		// TODO BG
 		return TABARD_OVERLAY + "00" + TABARD_ICON_BASE_EXTENSION;

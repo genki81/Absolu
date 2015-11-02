@@ -18,7 +18,6 @@ import org.springframework.mail.SimpleMailMessage;
 
 public class MembersTask extends TimerTask {
 	private final static Logger logger = LoggerFactory.getLogger(MembersTask.class);
-	private final BattleApiUtils battleApiUtils;
 
 	private final CharacterDao cDao;
 
@@ -26,7 +25,6 @@ public class MembersTask extends TimerTask {
 	private final SimpleMailMessage templateMessage;
 
 	public MembersTask(WicketApplication application) {
-		battleApiUtils = new BattleApiUtils(application);
 		cDao = new CharacterDao();
 		mailSender = (MailSender) SpringContext.getApplicationContext().getBean("mailSender");
 		templateMessage = (SimpleMailMessage) SpringContext.getApplicationContext().getBean("templateMessage");
@@ -40,11 +38,11 @@ public class MembersTask extends TimerTask {
 		sb.append("Début :" + now + "\n");
 		try {
 			cDao.cleanCharacters();
-			Guilde g = battleApiUtils.getGuilde();
+			Guilde g = BattleApiUtils.getGuilde();
 			for (Membre m : g.getMembers()) {
 				sb.append("Mise à jour du personnage " + m.getCharacter().getName() + "-" + m.getCharacter().getRealm()
 						+ "\n");
-				Personnage p = battleApiUtils.getPersonnage(m.getCharacter().getName(), m.getCharacter().getRealm());
+				Personnage p = BattleApiUtils.getPersonnage(m.getCharacter().getName(), m.getCharacter().getRealm());
 				cDao.saveCharacter(p);
 			}
 		} catch (Exception e) {
