@@ -1,6 +1,8 @@
 package org.absolu.battle.api.constants;
 
 import org.absolu.battle.api.pojo.Embleme;
+import org.absolu.battle.api.pojo.Faction;
+import org.absolu.battle.api.pojo.Guilde;
 
 public class BattleApiConstants {
 
@@ -16,11 +18,11 @@ public class BattleApiConstants {
 	protected static final String TABARD_ROOT_URL = "http://eu.battle.net/wow/static/images/guild/tabards/";
 	protected static final String TABARD_ICON_BASE_EXTENSION = ".png";
 	protected static final String TABARD_EMBLEM = "emblem_";
+	protected static final String TABARD_RING = "ring-";
 	protected static final String TABARD_BORDER = "border_";
 	protected static final String TABARD_OVERLAY = "overlay_";
 	protected static final String TABARD_BG = "bg_";
 	protected static final String TABARD_SHADOW = "shadow_";
-	protected static final String TABARD_RING = "ring_";
 	protected static final String TABARD_HOOKS = "hooks";
 
 	/* Data */
@@ -52,7 +54,39 @@ public class BattleApiConstants {
 		return WOW_ROOT_URL + "/character/" + realm + "/" + name + "?fields=items,talents&apikey=" + API_KEY;
 	}
 
-	public static String getEmbleme(Embleme e) {
-		return TABARD_ROOT_URL + TABARD_EMBLEM + e.getIcon() + TABARD_ICON_BASE_EXTENSION;
+	public static String getEmblemeRootUrl() {
+		return TABARD_ROOT_URL;
 	}
+
+	public static String getEmblemeBorder(Embleme e) {
+		return TABARD_BORDER + ((e.getBorder() < 10) ? "0" : "") + e.getBorder() + TABARD_ICON_BASE_EXTENSION;
+	}
+
+	public static String getEmblemeIcon(Embleme e) {
+		return TABARD_EMBLEM + e.getIcon() + TABARD_ICON_BASE_EXTENSION;
+	}
+
+	public static String getEmblemeRing(Guilde g) {
+		return TABARD_RING + Faction.findById(g.getSide()).toLowerCase() + TABARD_ICON_BASE_EXTENSION;
+	}
+
+	public static String getEmblemeOverlay(Embleme e) {
+		// TODO BG
+		return TABARD_OVERLAY + "00" + TABARD_ICON_BASE_EXTENSION;
+	}
+
+	public static String getEmblemeBg(Embleme e) {
+		// TODO BG
+		return TABARD_BG + "00" + TABARD_ICON_BASE_EXTENSION;
+	}
+
+	public static String getEmblemeShadow(Embleme e) {
+		// TODO BG
+		return TABARD_SHADOW + "00" + TABARD_ICON_BASE_EXTENSION;
+	}
+
+	public static String getEmblemeHooks() {
+		return TABARD_HOOKS + TABARD_ICON_BASE_EXTENSION;
+	}
+
 }

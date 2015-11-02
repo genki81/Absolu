@@ -30,6 +30,7 @@ public class WicketApplication extends WebApplication {
 	private List<Race> races;
 	private List<Classe> classes;
 	private Guilde guilde;
+	private String realPathRoot;
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
@@ -52,7 +53,7 @@ public class WicketApplication extends WebApplication {
 		battleApiUtils = new BattleApiUtils(this);
 		races = battleApiUtils.getListRaces();
 		classes = battleApiUtils.getListClasses();
-
+		realPathRoot = getServletContext().getRealPath("/");
 		initTasks();
 	}
 
@@ -94,6 +95,10 @@ public class WicketApplication extends WebApplication {
 
 	public BattleApiUtils getBattleApiUtils() {
 		return battleApiUtils;
+	}
+
+	public String getRealPathRoot() {
+		return realPathRoot;
 	}
 
 }

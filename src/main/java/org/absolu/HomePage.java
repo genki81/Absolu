@@ -1,6 +1,7 @@
 package org.absolu;
 
 import org.absolu.battle.api.pojo.Guilde;
+import org.absolu.battle.api.utils.BattleApiUtils;
 import org.absolu.dao.GuildeDao;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebPage;
@@ -22,6 +23,8 @@ public class HomePage extends WebPage {
 		Guilde g = ((WicketApplication) getApplication()).getBattleApiUtils().getGuilde();
 		((WicketApplication) getApplication()).setGuilde(g);
 		gDao.saveGuilde(g);
+
+		BattleApiUtils.handleEmblem(((WicketApplication) getApplication()).getRealPathRoot(), g);
 
 		add(headerPanel = new HeaderPanel("headerPanel"));
 		add(mainPanel = new MainPanel("mainPanel"));

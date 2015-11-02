@@ -1,9 +1,14 @@
 package org.absolu.battle.api.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,5 +145,61 @@ public class BattleApiUtils {
 			}
 		}
 		return new Classe();
+	}
+
+	private static void saveImage(final String root, final String embleme) {
+		OutputStream fos = null;
+		InputStream is = null;
+		try {
+			File rootDir = new File(root);
+			if (!rootDir.exists()) {
+				rootDir.mkdirs();
+			}
+			File fOut = new File(root, embleme);
+			if (fOut.exists()) {
+				fOut.delete();
+			}
+			fOut.createNewFile();
+			fos = new FileOutputStream(fOut);
+			URL icon = new URL(BattleApiConstants.getEmblemeRootUrl() + embleme);
+			is = icon.openStream();
+
+			byte[] b = new byte[2048];
+			int length;
+
+			while ((length = is.read(b)) != -1) {
+				fos.write(b, 0, length);
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+				}
+			}
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+
+	}
+
+	public static void handleEmblem(final String root, Guilde g) {
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeIcon(g.getEmblem()));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeRing(g));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeBorder(g.getEmblem()));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeBg(g.getEmblem()));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeOverlay(g.getEmblem()));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeShadow(g.getEmblem()));
+		saveImage(root + "/images/", BattleApiConstants.getEmblemeHooks());
+
 	}
 }
