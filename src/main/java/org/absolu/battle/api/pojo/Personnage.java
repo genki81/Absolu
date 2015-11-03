@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.absolu.battle.api.utils.BattleApiUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Personnage implements Serializable {
 	private static final long serialVersionUID = 4120622827275356452L;
 

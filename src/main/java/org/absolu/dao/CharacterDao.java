@@ -8,6 +8,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
 public class CharacterDao extends GenericDao {
+	private static final long serialVersionUID = -3031341743624117651L;
 
 	public void cleanCharacters() {
 		DBCollection coll = connection.getMongoDb().getCollection("personnages");

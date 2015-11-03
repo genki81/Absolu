@@ -53,10 +53,10 @@ public class WicketApplication extends WebApplication {
 		GregorianCalendar cal = new GregorianCalendar();
 		// cal.setTimeInMillis(cal.getTimeInMillis() + 15000);
 
-		if (cal.get(Calendar.HOUR_OF_DAY) >= 2) {
+		if (cal.get(Calendar.HOUR_OF_DAY) >= 20) {
 			cal.setTimeInMillis(cal.getTimeInMillis() + 86400000);
 		}
-		cal.set(Calendar.HOUR_OF_DAY, 2);
+		cal.set(Calendar.HOUR_OF_DAY, 20);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);

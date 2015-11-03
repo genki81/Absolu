@@ -8,6 +8,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
 public class GuildeDao extends GenericDao {
+	private static final long serialVersionUID = 7432878201892046597L;
 
 	public boolean saveGuilde(Guilde g) {
 		try {
