@@ -25,7 +25,7 @@
 		</license>
 	</licenses>
 	<properties>
-		<tomcat.webapps.dir>E:\workspace\tomcat-genki\diy\tomcat\webapps</tomcat.webapps.dir>
+		<tomcat.webapps.dir>${OPENSHIFT_DATA_DIR}\tomcat\diy\tomcat\webapps</tomcat.webapps.dir>
 		<httpcomponents.version>4.5.1</httpcomponents.version>
 		<commons.httpclient.version>3.1</commons.httpclient.version>
 		<jackson.version>2.6.3</jackson.version>
