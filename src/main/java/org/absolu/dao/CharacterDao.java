@@ -1,6 +1,8 @@
 package org.absolu.dao;
 
 import org.absolu.battle.api.pojo.Personnage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
@@ -9,6 +11,7 @@ import com.mongodb.DBObject;
 
 public class CharacterDao extends GenericDao {
 	private static final long serialVersionUID = -3031341743624117651L;
+	private final static Logger LOGGER = LogManager.getLogger(CharacterDao.class);
 
 	public void cleanCharacters() {
 		DBCollection coll = connection.getMongoDb().getCollection("personnages");
@@ -29,7 +32,7 @@ public class CharacterDao extends GenericDao {
 
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			return false;
 		}
 	}
@@ -49,7 +52,7 @@ public class CharacterDao extends GenericDao {
 				return null;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return p;
 	}

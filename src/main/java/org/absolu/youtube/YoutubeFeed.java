@@ -18,19 +18,18 @@ import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 
 public class YoutubeFeed implements Serializable {
 	private static final long serialVersionUID = 7520054289626100922L;
-	private final static Logger logger = LoggerFactory.getLogger(YoutubeFeed.class);
+	private final static Logger LOGGER = LogManager.getLogger(YoutubeFeed.class);
 	private final static String ABSOLU_CHANNEL_ID = "UCpYI1yr-kZaut6Iw_InrYLw";
 	private final static String ELEMETH_CHANNEL_ID = "UCo2pZbiSILOhFxJ-REiFkvw";
 
@@ -64,12 +63,10 @@ public class YoutubeFeed implements Serializable {
 					builder.append(line);
 				}
 			} else {
-				logger.error("Failed to read channel");
+				LOGGER.error("Failed to read channel");
 			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return builder.toString();
 	}
@@ -85,7 +82,7 @@ public class YoutubeFeed implements Serializable {
 						&& i.getContentDetails().getRelatedPlaylists().getUploads() != null) {
 					String json = queryYoutube(YOUTUBE_VID_URL
 							+ i.getContentDetails().getRelatedPlaylists().getUploads());
-					logger.debug(json);
+					LOGGER.debug(json);
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						ObjectReader reader = mapper.readerFor(PlaylistItems.class);
@@ -93,12 +90,12 @@ public class YoutubeFeed implements Serializable {
 						pi.getItems().addAll(tmp.getItems());
 						break;
 					} catch (Exception e) {
-						e.printStackTrace();
+						LOGGER.error(e);
 					}
 				}
 			}
 		}
-		logger.debug(pi.toString());
+		LOGGER.debug(pi.toString());
 		Collections.sort(pi.getItems(), new Comparator<Item>() {
 
 			@Override
@@ -114,13 +111,13 @@ public class YoutubeFeed implements Serializable {
 				return d2.compareTo(d1);
 			}
 		});
-		logger.debug(pi.toString());
+		LOGGER.debug(pi.toString());
 		return pi;
 	}
 
 	private Channel getChannel(String channel) {
 		String json = queryYoutube(YOUTUBE_PL_ID_URL + channel);
-		logger.debug(json);
+		LOGGER.debug(json);
 		Channel c = new Channel();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -128,7 +125,7 @@ public class YoutubeFeed implements Serializable {
 			c = reader.readValue(json);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return c;
 	}

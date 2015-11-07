@@ -1,6 +1,8 @@
 package org.absolu.dao;
 
 import org.absolu.battle.api.pojo.Guilde;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
@@ -9,6 +11,7 @@ import com.mongodb.DBObject;
 
 public class GuildeDao extends GenericDao {
 	private static final long serialVersionUID = 7432878201892046597L;
+	private final static Logger LOGGER = LogManager.getLogger(GuildeDao.class);
 
 	public boolean saveGuilde(Guilde g) {
 		try {
@@ -24,7 +27,7 @@ public class GuildeDao extends GenericDao {
 
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			return false;
 		}
 	}

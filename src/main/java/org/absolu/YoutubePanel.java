@@ -6,6 +6,8 @@ import java.util.Date;
 import org.absolu.youtube.YoutubeFeed;
 import org.absolu.youtube.pojo.Item;
 import org.absolu.youtube.pojo.PlaylistItems;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -14,13 +16,11 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.format.datetime.DateFormatter;
 
 public class YoutubePanel extends Panel {
 	private static final long serialVersionUID = 3471590747420584860L;
-	private static final Logger logger = LoggerFactory.getLogger(YoutubePanel.class);
+	private static final Logger LOGGER = LogManager.getLogger(YoutubePanel.class);
 
 	public YoutubePanel(final String id) {
 		super(id);
@@ -53,7 +53,7 @@ public class YoutubePanel extends Panel {
 							DateFormatter dfOut = new DateFormatter("dd/MM/yyyy HH:mm:ss");
 							return dfOut.print(d, getLocale());
 						} catch (ParseException e) {
-							e.printStackTrace();
+							LOGGER.error(e);
 						}
 						return "err";
 					}
@@ -86,6 +86,6 @@ public class YoutubePanel extends Panel {
 		};
 		add(items);
 
-		logger.debug(pi.getItems().get(0).getSnippet().getThumbnails().get("default").get("url"));
+		LOGGER.debug(pi.getItems().get(0).getSnippet().getThumbnails().get("default").get("url"));
 	}
 }

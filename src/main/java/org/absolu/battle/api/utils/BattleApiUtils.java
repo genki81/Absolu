@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -34,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 
 public class BattleApiUtils {
-	private final static Logger logger = LogManager.getLogger(BattleApiUtils.class);
+	private final static Logger LOGGER = LogManager.getLogger(BattleApiUtils.class);
 
 	private static List<Race> races;
 	private static List<Classe> classes;
@@ -48,7 +46,7 @@ public class BattleApiUtils {
 
 	public static Guilde getGuilde() {
 		String readGuildMembersCount = queryBattle(BattleApiConstants.getGuildeMembersQueryUrl());
-		logger.debug(readGuildMembersCount);
+		LOGGER.debug(readGuildMembersCount);
 		if (readGuildMembersCount == null) {
 			return null;
 		}
@@ -60,16 +58,16 @@ public class BattleApiUtils {
 			ObjectReader reader = mapper.readerFor(Guilde.class);
 			g = reader.readValue(readGuildMembersCount);
 
-			logger.info("Nombre de membres " + g.getMembers().size());
+			LOGGER.info("Nombre de membres " + g.getMembers().size());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return g;
 	}
 
 	public static Personnage getPersonnage(final String name, final String realm) {
 		String readCharacter = queryBattle(BattleApiConstants.getCharacterQueryUrl(name, realm));
-		logger.debug(readCharacter);
+		LOGGER.debug(readCharacter);
 		if (readCharacter == null) {
 			return null;
 		}
@@ -79,14 +77,14 @@ public class BattleApiUtils {
 			ObjectReader reader = mapper.readerFor(Personnage.class);
 			p = reader.readValue(readCharacter);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return p;
 	}
 
 	private static List<Race> getListRaces() {
 		String sRaces = queryBattle(BattleApiConstants.getRacesQueryUrl());
-		logger.debug(sRaces);
+		LOGGER.debug(sRaces);
 		if (sRaces == null) {
 			return null;
 		}
@@ -96,19 +94,19 @@ public class BattleApiUtils {
 			ObjectReader reader = mapper.readerFor(new TypeReference<List<Race>>() {
 			}).withRootName("races");
 			races = reader.readValue(sRaces);
-			logger.debug("Nombre de races " + races.size());
+			LOGGER.debug("Nombre de races " + races.size());
 			for (Race race : races) {
-				logger.debug(race.toString());
+				LOGGER.debug(race.toString());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return races;
 	}
 
 	private static List<Classe> getListClasses() {
 		String sClasses = queryBattle(BattleApiConstants.getClassesQueryUrl());
-		logger.debug(sClasses);
+		LOGGER.debug(sClasses);
 		if (sClasses == null) {
 			return null;
 		}
@@ -118,12 +116,12 @@ public class BattleApiUtils {
 			ObjectReader reader = mapper.readerFor(new TypeReference<List<Classe>>() {
 			}).withRootName("classes");
 			classes = reader.readValue(sClasses);
-			logger.debug("Nombre de races " + classes.size());
+			LOGGER.debug("Nombre de races " + classes.size());
 			for (Classe classe : classes) {
-				logger.debug(classe.toString());
+				LOGGER.debug(classe.toString());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return classes;
 	}
@@ -145,13 +143,11 @@ public class BattleApiUtils {
 					builder.append(line);
 				}
 			} else {
-				logger.error("Failed to download file");
+				LOGGER.error("Failed to download file");
 				return null;
 			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return builder.toString();
 	}
@@ -189,10 +185,8 @@ public class BattleApiUtils {
 				fos.write(b, 0, length);
 			}
 
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} finally {
 			if (is != null) {
 				try {
