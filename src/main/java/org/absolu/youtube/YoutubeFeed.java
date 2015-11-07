@@ -36,9 +36,6 @@ public class YoutubeFeed implements Serializable {
 	private final static List<String> CHANNELS = Collections.unmodifiableList(Arrays.asList(new String[] {
 			ABSOLU_CHANNEL_ID, ELEMETH_CHANNEL_ID }));
 
-	// private final static String YOUTUBE_URL =
-	// "https://www.youtube.com/feeds/videos.xml?channel_id=";
-
 	private final static String API_KEY = "AIzaSyAOg1yb4Qh44z5gi3jJU7C3ajWtjiWu15E";
 	private final static String YOUTUBE_PL_ID_URL = "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&key="
 			+ API_KEY + "&id=";

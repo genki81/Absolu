@@ -9,23 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Guilde implements Serializable {
 	private static final long serialVersionUID = 7494544015115867805L;
 
-	// private long lastModified;
 	private String name;
 	private String realm;
-	// private String battlegroup;
 	private int level;
 	private int side;
 	private long achievementPoints;
 	private List<Membre> members;
 	private Embleme emblem;
-
-	// public long getLastModified() {
-	// return lastModified;
-	// }
-	//
-	// public void setLastModified(long lastModified) {
-	// this.lastModified = lastModified;
-	// }
 
 	public String getName() {
 		return name;
@@ -42,14 +32,6 @@ public class Guilde implements Serializable {
 	public void setRealm(String realm) {
 		this.realm = realm;
 	}
-
-	// public String getBattlegroup() {
-	// return battlegroup;
-	// }
-	//
-	// public void setBattlegroup(String battlegroup) {
-	// this.battlegroup = battlegroup;
-	// }
 
 	public int getLevel() {
 		return level;

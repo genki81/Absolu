@@ -9,8 +9,6 @@ public class Classe implements Serializable {
 	private static final long serialVersionUID = 6459631380263963061L;
 
 	private int id;
-	// private int mask;
-	// private String powerType;
 	private String name;
 
 	public int getId() {

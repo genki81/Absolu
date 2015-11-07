@@ -192,12 +192,14 @@ public class BattleApiUtils {
 				try {
 					is.close();
 				} catch (IOException e) {
+					LOGGER.error(e);
 				}
 			}
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException e) {
+					LOGGER.error(e);
 				}
 			}
 		}

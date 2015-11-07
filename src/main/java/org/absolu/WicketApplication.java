@@ -51,7 +51,6 @@ public class WicketApplication extends WebApplication {
 		MembersTask mt = new MembersTask(this);
 
 		GregorianCalendar cal = new GregorianCalendar();
-		// cal.setTimeInMillis(cal.getTimeInMillis() + 15000);
 
 		if (cal.get(Calendar.HOUR_OF_DAY) >= 20) {
 			cal.setTimeInMillis(cal.getTimeInMillis() + 86400000);

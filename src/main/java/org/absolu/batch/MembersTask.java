@@ -10,14 +10,14 @@ import org.absolu.battle.api.pojo.Personnage;
 import org.absolu.battle.api.utils.BattleApiUtils;
 import org.absolu.dao.CharacterDao;
 import org.absolu.spring.SpringContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 public class MembersTask extends TimerTask {
-	private final static Logger logger = LoggerFactory.getLogger(MembersTask.class);
+	private final static Logger LOGGER = LogManager.getLogger(MembersTask.class);
 
 	private final CharacterDao cDao;
 
@@ -48,6 +48,7 @@ public class MembersTask extends TimerTask {
 				}
 			}
 		} catch (Exception e) {
+			LOGGER.error(e);
 			sb.append("Erreur : " + e.getMessage() + "\n");
 		}
 		now = new Date();
@@ -55,11 +56,11 @@ public class MembersTask extends TimerTask {
 
 		SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
 		msg.setText(sb.toString());
-		logger.info(sb.toString());
+		LOGGER.info(sb.toString());
 		try {
 			this.mailSender.send(msg);
 		} catch (MailException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex);
 		}
 	}
 

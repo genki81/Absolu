@@ -9,7 +9,6 @@ public class Race implements Serializable {
 	private static final long serialVersionUID = -3163312936460985018L;
 
 	private int id;
-	// private int mask;
 	private String side;
 	private String name;
 
@@ -23,14 +22,6 @@ public class Race implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	// public int getMask() {
-	// return mask;
-	// }
-	//
-	// public void setMask(int mask) {
-	// this.mask = mask;
-	// }
 
 	public String getSide() {
 		return side;
