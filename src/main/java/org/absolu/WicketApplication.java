@@ -38,9 +38,7 @@ public class WicketApplication extends WebApplication {
 	public void init() {
 		super.init();
 		logger.info("Initialisation de WicketApplication");
-		logger.info("Spring");
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
-		logger.info("Le reste");
 		realPathRoot = getServletContext().getRealPath("/");
 		initTasks();
 	}
@@ -62,6 +60,7 @@ public class WicketApplication extends WebApplication {
 
 		Date next = new Date(cal.getTimeInMillis());
 		time.schedule(mt, next, 1000 * 60 * 60 * 24);
+		logger.info("Prochaine execution de MembersTask a : " + next.toString());
 	}
 
 	public String getRealPathRoot() {

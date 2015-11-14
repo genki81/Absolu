@@ -1,12 +1,7 @@
 package org.absolu;
 
-import java.util.Map;
-
+import org.absolu.batch.MembersTask;
 import org.absolu.battle.api.pojo.Guilde;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
@@ -29,27 +24,19 @@ public class FooterPanel extends Panel {
 		divtest.setOutputMarkupId(true);
 
 		Form<FooterPanel> form = new Form<FooterPanel>("formTest");
-		Button bTest = new Button("testButton") {
-			private static final long serialVersionUID = 7579032437203363216L;
+
+		Button bTask = new Button("taskButton") {
+			private static final long serialVersionUID = 5079418876520060666L;
 
 			@Override
 			public void onSubmit() {
-				logger.info("button2.onSubmit executed");
-				LoggerContext logContext = (LoggerContext) LogManager.getContext(false);
-				Map<String, LoggerConfig> map = logContext.getConfiguration().getLoggers();
-				logger.debug("Avant");
-				for (LoggerConfig c : map.values()) {
-					if (Level.OFF.intLevel() == c.getLevel().intLevel()) {
-						c.setLevel(Level.DEBUG);
-					} else {
-						c.setLevel(Level.OFF);
-					}
-				}
-				logger.debug("Après");
+				logger.info("bTask.onSubmit executed");
+				MembersTask task = new MembersTask((WicketApplication) getApplication());
+				task.run();
 			}
 		};
-		bTest.setDefaultFormProcessing(false);
-		form.add(bTest);
+		bTask.setDefaultFormProcessing(false);
+		form.add(bTask);
 
 		divtest.add(form);
 
