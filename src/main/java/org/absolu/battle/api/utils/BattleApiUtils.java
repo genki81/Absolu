@@ -17,6 +17,7 @@ import org.absolu.battle.api.pojo.Classe;
 import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Personnage;
 import org.absolu.battle.api.pojo.Race;
+import org.absolu.battle.api.pojo.display.PersonnageDisplay;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -161,7 +162,7 @@ public class BattleApiUtils {
 		return new Classe();
 	}
 
-	private static void saveImage(final String root, final String embleme) {
+	private static void saveImage(final String root, final String emblemeUrl) {
 		OutputStream fos = null;
 		InputStream is = null;
 		try {
@@ -169,13 +170,14 @@ public class BattleApiUtils {
 			if (!rootDir.exists()) {
 				rootDir.mkdirs();
 			}
+			String embleme = emblemeUrl.substring(emblemeUrl.lastIndexOf("/") + 1);
 			File fOut = new File(root, embleme);
 			if (fOut.exists()) {
 				fOut.delete();
 			}
 			fOut.createNewFile();
 			fos = new FileOutputStream(fOut);
-			URL icon = new URL(BattleApiConstants.getEmblemeRootUrl() + embleme);
+			URL icon = new URL(emblemeUrl);
 			is = icon.openStream();
 
 			byte[] b = new byte[2048];
@@ -207,14 +209,13 @@ public class BattleApiUtils {
 	}
 
 	public static void handleEmblem(final String root, Guilde g) {
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeRing(g));
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeIcon(g.getEmblem()));
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeBorder(g.getEmblem()));
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeBg(g.getEmblem()));
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeOverlay(g.getEmblem()));
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeShadow(g.getEmblem()));
-		saveImage(root + "/images/", BattleApiConstants.getEmblemeHooks());
-
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeRing(g));
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeIcon(g.getEmblem()));
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeBorder(g.getEmblem()));
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeBg(g.getEmblem()));
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeOverlay(g.getEmblem()));
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeShadow(g.getEmblem()));
+		saveImage(root + "/images/emblem/", BattleApiConstants.getEmblemeHooks());
 	}
 
 	public static List<Race> getRaces() {
@@ -239,6 +240,25 @@ public class BattleApiUtils {
 		sb.append(color.getBlue());
 		sb.append("]");
 		return sb.toString();
+
+	}
+
+	public static void saveSpecImages(String root, List<PersonnageDisplay> list) {
+		List<String> specs = new ArrayList<String>();
+
+		for (PersonnageDisplay p : list) {
+			if (!specs.contains(p.getSpecIcon())) {
+				specs.add(p.getSpecIcon());
+			}
+		}
+		for (String spec : specs) {
+			spec = BattleApiConstants.buildSpecIconUrl(spec);
+			saveImage(root + "/images/specs/", spec);
+		}
+	}
+
+	public static void saveRoleImages(String root) {
+		saveImage(root + "/images/roles/", BattleApiConstants.getRoleIcon());
 
 	}
 }

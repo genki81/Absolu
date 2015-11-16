@@ -20,7 +20,7 @@ public class ImagePanel extends Panel {
 
 			@Override
 			public String getObject() {
-				return BattleApiConstants.buildSpecIconUrl(icon);
+				return BattleApiConstants.buildLocalSpecIconUrl(icon);
 			}
 		}));
 		imSpec.setOutputMarkupId(true);

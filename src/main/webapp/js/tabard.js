@@ -59,7 +59,7 @@ function GuildTabard(id, tabard) {
 		canvas = document.getElementById(id),
 		context = null,
 //		_path = 'http://eu.battle.net/wow/static/images/guild/tabards/',
-		_path = '/Absolu/images/',
+		_path = '/Absolu/images/emblem/',
 		_width = canvas.width,
 		_height = canvas.height,
 		_src = [],

@@ -21,6 +21,7 @@ public class HomePage extends WebPage {
 		gDao.saveGuilde(g);
 
 		BattleApiUtils.handleEmblem(((WicketApplication) getApplication()).getRealPathRoot(), g);
+		BattleApiUtils.saveRoleImages(((WicketApplication) getApplication()).getRealPathRoot());
 
 		IModel<Guilde> gModel = new Model<Guilde>();
 		gModel.setObject(g);

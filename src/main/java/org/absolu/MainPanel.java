@@ -8,6 +8,7 @@ import org.absolu.battle.api.pojo.Guilde;
 import org.absolu.battle.api.pojo.Membre;
 import org.absolu.battle.api.pojo.Personnage;
 import org.absolu.battle.api.pojo.display.PersonnageDisplay;
+import org.absolu.battle.api.utils.BattleApiUtils;
 import org.absolu.dao.CharacterDao;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
@@ -45,6 +46,8 @@ public class MainPanel extends Panel {
 			pd.init(m, p);
 			list.add(pd);
 		}
+
+		BattleApiUtils.saveSpecImages(((WicketApplication) getApplication()).getRealPathRoot(), list);
 
 		final PersonnageDisplayProvider personnageDisplayProvider = new PersonnageDisplayProvider(list);
 

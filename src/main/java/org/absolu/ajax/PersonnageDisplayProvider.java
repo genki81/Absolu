@@ -49,7 +49,7 @@ public class PersonnageDisplayProvider extends SortableDataProvider<PersonnageDi
 
 	public PersonnageDisplayProvider(List<PersonnageDisplay> list) {
 		// The default sorting
-		setSort("name", SortOrder.ASCENDING);
+		setSort("iLvl", SortOrder.DESCENDING);
 
 		this.list = list;
 	}
